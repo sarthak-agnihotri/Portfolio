@@ -64,15 +64,25 @@ body.loaded-active main {
 </style> -->
 
 <style>
-    /* 1. Global Reset & Base */
+    /* --- 1. GLOBAL RESET & FOUNDATION --- */
+    :root {
+        --bg-color: #05060f;
+        --accent: #f97316;
+        --accent-glow: rgba(249, 115, 22, 0.3);
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --text-dim: #94a3b8;
+    }
+
     body {
-        background-color: #05060f;
+        background-color: var(--bg-color);
         color: #ffffff;
         margin: 0;
         overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
     }
 
-    /* 2. THE PREMIUM PRELOADER (Split-Panel Logic) */
+    /* --- 2. PREMIUM PRELOADER (CINEMATIC SHUTTERS) --- */
     #preloader {
         position: fixed;
         inset: 0;
@@ -80,79 +90,136 @@ body.loaded-active main {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: transparent; /* Panels handle the background */
+        background: transparent;
     }
 
-    /* Cinematic Shutter Panels */
     .preloader-panel {
         position: absolute;
         left: 0;
         width: 100%;
-        height: 50.5%; /* Overlap by 0.5% to prevent a gap line */
-        background: #05060f;
+        height: 50.5%;
+        background: var(--bg-color);
         z-index: 5;
         transition: transform 1.4s cubic-bezier(0.85, 0, 0.15, 1);
     }
-    .top-panel { top: 0; }
-    .bottom-panel { bottom: 0; }
+    .top-panel { top: 0; border-bottom: 1px solid var(--glass-border); }
+    .bottom-panel { bottom: 0; border-top: 1px solid var(--glass-border); }
 
     #preloader.loaded .top-panel { transform: translateY(-100%); }
     #preloader.loaded .bottom-panel { transform: translateY(100%); }
+    #preloader.loaded {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
 
-    /* Typography & Glow */
-    .loader-content { text-align: center; position: relative; }
+    /* Counter & Name Logic */
+    .loader-content { text-align: center; position: relative; z-index: 10; }
     
     #loader-percent {
-        transition: all 0.5s ease;
-        font-family: 'Inter', sans-serif;
-        -webkit-text-stroke: 1px rgba(255,255,255,0.05);
+        font-size: clamp(5rem, 15vw, 12rem);
+        font-weight: 900;
+        font-style: italic;
+        line-height: 1;
+        -webkit-text-stroke: 1px rgba(255,255,255,0.1);
         color: transparent;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        user-select: none;
+        z-index: -1;
     }
+
     .loader-name {
-        display: inline-block;
-        mask-image: linear-gradient(to right, white, white); /* For smooth reveal */
+        font-size: clamp(1.5rem, 5vw, 3rem);
+        font-weight: 800;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
         animation: revealText 1.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
     }
-@keyframes revealText {
-        0% { transform: translateY(100%); opacity: 0; letter-spacing: 0.5em; filter: blur(10px); }
+
+    @keyframes revealText {
+        0% { transform: translateY(100%); opacity: 0; filter: blur(10px); }
         100% { transform: translateY(0); opacity: 1; letter-spacing: 0.3em; filter: blur(0); }
     }
-#preloader.loaded {
-    opacity: 0;
-    visibility: hidden;    /* Removes it from the visual tree */
-    pointer-events: none; /* Allows clicks to pass THROUGH to the buttons below */
-    transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-}
 
-/* Keep your existing wrapper transition as well */
-#preloader.loaded .loader-wrapper {
-    opacity: 0;
-    transform: scale(1.1);
-    filter: blur(20px);
-    transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-}
-    /* 3. Hero & Content Reveal Logic */
-    .hero-gradient {
-        background: radial-gradient(circle at 80% 50%, #161720 0%, #05060f 100%);
+    /* --- 3. EDUCATION SECTION (MODERN GLASS CARDS) --- */
+    .education-container {
+        position: relative;
+        padding-left: 2rem;
+        margin-left: 1rem;
+        border-left: 1px solid var(--glass-border);
     }
 
+    .edu-card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Glow effect on hover */
+    .edu-card:hover {
+        transform: translateX(10px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--accent);
+        box-shadow: 0 0 30px rgba(249, 115, 22, 0.1);
+    }
+
+    /* Timeline Dots */
+    .edu-card::before {
+        content: '';
+        position: absolute;
+        left: -2.45rem;
+        top: 2rem;
+        width: 12px;
+        height: 12px;
+        background: var(--bg-color);
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        z-index: 2;
+        box-shadow: 0 0 10px var(--accent);
+    }
+
+    .stat-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: rgba(249, 115, 22, 0.1);
+        color: var(--accent);
+        border: 1px solid rgba(249, 115, 22, 0.2);
+        border-radius: 99px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+
+    /* --- 4. UTILITIES & ANIMATIONS --- */
+    .accent-orange { color: var(--accent); }
+    
     #main-content {
         transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
-    /* 4. Branding & Utility */
-    .accent-orange { color: #f97316; }
-    .bg-orange { background-color: #f97316; }
-
-    .hero-reveal {
+    .reveal-stagger {
         opacity: 0;
         transform: translateY(30px);
-        transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+        transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
-    .hero-reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-stagger.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-    .parallax-bg { will-change: transform; pointer-events: none; z-index: 0; }
+    .hero-gradient {
+        background: radial-gradient(circle at 80% 50%, #161720 0%, #05060f 100%);
+    }
 </style>
 </head>
 
@@ -488,6 +555,70 @@ body.loaded-active main {
             </div>
         </div>
     </section>
+
+<section id="education" class="py-24 px-6 md:px-12 max-w-7xl mx-auto relative overflow-hidden">
+    
+    <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-orange-500/5 blur-[120px] -z-10"></div>
+
+    <div class="reveal mb-16">
+        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+            Education<span class="accent-orange">.</span>
+        </h2>
+        <div class="h-1 w-20 bg-orange-500 mt-4"></div>
+    </div>
+
+    <div class="education-container">
+        
+        <div class="edu-card reveal-stagger">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-2xl md:text-3xl font-black uppercase italic text-white tracking-tight">
+                        Bachelor of Technology
+                    </h3>
+                    <p class="text-orange-500 font-bold tracking-widest text-sm uppercase mt-1">
+                        Computer Science and Engineering
+                    </p>
+                </div>
+                <div class="stat-badge">
+                    <span class="opacity-50 mr-1 text-xs uppercase">CGPA</span> 8.24
+                </div>
+            </div>
+            <p class="text-gray-400 mt-4 flex items-center gap-2">
+                <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
+                Lovely Professional University
+            </p>
+        </div>
+
+        <div class="edu-card reveal-stagger">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-2xl md:text-3xl font-black uppercase italic text-white tracking-tight opacity-90">
+                        Intermediate (Class XII)
+                    </h3>
+                    <p class="text-gray-400 mt-1">Kendriya Vidyalaya Cantt Kanpur</p>
+                </div>
+                <div class="stat-badge">
+                    77.34%
+                </div>
+            </div>
+        </div>
+
+        <div class="edu-card reveal-stagger">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-2xl md:text-3xl font-black uppercase italic text-white tracking-tight opacity-90">
+                        Matriculation (Class X)
+                    </h3>
+                    <p class="text-gray-400 mt-1">Kendriya Vidyalaya Cantt Kanpur</p>
+                </div>
+                <div class="stat-badge">
+                    86%
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
     <section id="projects" class="py-24 relative bg-[#0a0a0a]">
         <div class="max-w-7xl mx-auto px-6">
@@ -1033,6 +1164,36 @@ body.loaded-active main {
                     </div>
                 </div>
             </a>
+
+            <a href="Screenshot 2026-03-21 151410.png" target="_blank"
+    class="group block relative p-[1px] rounded-2xl bg-gradient-to-b from-zinc-700 to-zinc-900 transition-all duration-500 hover:scale-[1.02] reveal-stagger">
+    <div class="bg-zinc-950 p-6 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-500/5 blur-3xl rounded-full"></div>
+
+        <div>
+            <div class="flex items-center justify-between mb-6">
+                <div class="px-3 py-1 bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase rounded-full border border-purple-500/20 tracking-widest">
+                    NPTEL
+                </div>
+                <i class="fas fa-external-link-alt text-zinc-700 group-hover:text-purple-400 transition-colors"></i>
+            </div>
+            
+            <h4 class="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors mb-2 italic uppercase">
+                Social Networks
+            </h4>
+            <p class="text-gray-500 text-sm leading-relaxed">
+                Study of structural properties of online social networks, graph theory, and information diffusion models.
+            </p>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-zinc-900 flex items-center justify-between">
+            <span class="text-[10px] text-zinc-600 font-mono tracking-tighter">ID: NPTEL-SN-2026</span>
+            <span class="text-xs text-zinc-400 group-hover:underline">
+                View Certificate →
+            </span>
+        </div>
+    </div>
+</a>
 
         </div>
     </section>
