@@ -8,81 +8,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- <style>
-    /* 1. Global Reset & Base */
-    body {
-        background-color: #05060f; /* Slightly deeper black for better contrast */
-        color: #ffffff;
-        margin: 0;
-        overflow-x: hidden; /* Prevents horizontal scroll from parallax blobs */
-    }
-
-    /* 2. Hero Section Depth */
-    .hero-gradient {
-        /* Adjusted for a smoother radial drop-off */
-        background: radial-gradient(circle at 80% 50%, #161720 0%, #05060f 100%);
-    }
-
-    /* 3. Branding Colors */
-    .accent-orange {
-        color: #f97316;
-    }
-
-    .bg-orange {
-        background-color: #f97316;
-    }
-
-    /* 4. Entrance Animations */
-    .hero-reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
-    }
-
-    .hero-reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* 5. Performance Optimized Parallax */
-    .parallax-bg {
-        will-change: transform;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    main {
-    transition: opacity 1s ease 2s, transform 1s ease 2s;
-    opacity: 0;
-    transform: scale(0.98);
-}
-
-body.loaded-active main {
-    opacity: 1;
-    transform: scale(1);
-}
-</style> -->
-
     <style>
         /* --- 1. GLOBAL RESET & FOUNDATION --- */
+        /* --- 1. CORE VARIABLES & RESET --- */
+        /* --- 1. CORE VARIABLES & RESET --- */
         :root {
             --bg-color: #05060f;
             --accent: #f97316;
-            --accent-glow: rgba(249, 115, 22, 0.3);
+            --accent-glow: rgba(249, 115, 22, 0.15);
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-dim: #94a3b8;
+            --laravel-red: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background-color: var(--bg-color);
             color: #ffffff;
-            margin: 0;
             overflow-x: hidden;
             font-family: 'Inter', sans-serif;
         }
 
-        /* --- 2. PREMIUM PRELOADER (CINEMATIC SHUTTERS) --- */
+        /* --- 2. PREMIUM PRELOADER --- */
         #preloader {
             position: fixed;
             inset: 0;
@@ -90,7 +44,6 @@ body.loaded-active main {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: transparent;
         }
 
         .preloader-panel {
@@ -124,11 +77,9 @@ body.loaded-active main {
         #preloader.loaded {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
-            transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: all 1.2s ease;
         }
 
-        /* Counter & Name Logic */
         .loader-content {
             text-align: center;
             position: relative;
@@ -139,41 +90,16 @@ body.loaded-active main {
             font-size: clamp(5rem, 15vw, 12rem);
             font-weight: 900;
             font-style: italic;
-            line-height: 1;
             -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
             color: transparent;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            user-select: none;
             z-index: -1;
         }
 
-        .loader-name {
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: 0.5em;
-            text-transform: uppercase;
-            animation: revealText 1.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-        }
-
-        @keyframes revealText {
-            0% {
-                transform: translateY(100%);
-                opacity: 0;
-                filter: blur(10px);
-            }
-
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-                letter-spacing: 0.3em;
-                filter: blur(0);
-            }
-        }
-
-        /* --- 3. EDUCATION SECTION (MODERN GLASS CARDS) --- */
+        /* --- 3. EDUCATION & CARDS --- */
         .education-container {
             position: relative;
             padding-left: 2rem;
@@ -188,67 +114,149 @@ body.loaded-active main {
             border-radius: 1rem;
             padding: 2rem;
             margin-bottom: 2.5rem;
-            position: relative;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Glow effect on hover */
         .edu-card:hover {
             transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.05);
             border-color: var(--accent);
-            box-shadow: 0 0 30px rgba(249, 115, 22, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 30px var(--accent-glow);
         }
 
-        /* Timeline Dots */
-        .edu-card::before {
+        /* --- 4. HIGH-ATTRACTION SKILLS SECTION --- */
+        #skills {
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, #0a0b1e 0%, #05060f 100%);
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        /* Central Neon Glow behind marquee */
+        #skills::before {
             content: '';
             position: absolute;
-            left: -2.45rem;
-            top: 2rem;
-            width: 12px;
-            height: 12px;
-            background: var(--bg-color);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            z-index: 2;
-            box-shadow: 0 0 10px var(--accent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 180px;
+            background: var(--accent-glow);
+            filter: blur(120px);
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .stat-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(249, 115, 22, 0.1);
-            color: var(--accent);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 99px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 1rem;
+        #skills p.text-zinc-500 {
+            color: #ffffff !important;
+            /* Pure white for visibility */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            /* Subtle glow */
+            opacity: 1 !important;
+            font-weight: 900;
+            letter-spacing: 0.6em;
+            /* Thoda aur cinematic spacing */
         }
 
-        /* --- 4. UTILITIES & ANIMATIONS --- */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-scroll {
+            display: flex;
+            gap: 0 !important;
+            animation: scroll 40s linear infinite;
+        }
+
+        .group:hover .animate-scroll {
+            animation-play-state: paused;
+        }
+
+        .skill-item {
+            flex-shrink: 0;
+            width: 240px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 12px;
+
+            /* Background ko thoda light karo taaki dabba dikhe */
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            /* Bright border */
+            border-radius: 16px;
+
+            /* Default opacity 40% bohot kam thi, ise 85% karo */
+            opacity: 0.85 !important;
+            filter: none !important;
+            /* Grayscale default mein hata do ya kam karo */
+            transition: all 0.4s ease;
+        }
+
+        .skill-item:hover {
+            opacity: 1 !important;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .skill-item i,
+        .skill-item svg,
+        .skill-item img {
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+        }
+
+        .skill-item:hover i,
+        .skill-item:hover svg,
+        .skill-item:hover img {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        .skill-item span {
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+
+        .skill-item:hover span {
+            color: #ffffff;
+        }
+
+        /* --- 5. UTILITIES & REVEALS --- */
         .accent-orange {
             color: var(--accent);
         }
 
-        #main-content {
-            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .reveal-stagger {
+        .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .reveal-stagger.active {
+        .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .hero-gradient {
-            background: radial-gradient(circle at 80% 50%, #161720 0%, #05060f 100%);
+        .glow-overlay {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-glow);
+            filter: blur(120px);
+            border-radius: 50%;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -441,25 +449,45 @@ body.loaded-active main {
                         class="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] hover:border-orange-500/30 transition-all">
                         <p class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-4">Education</p>
                         <h4 class="text-white font-bold">B.Tech in Computer Science</h4>
-                        <p class="text-sm text-zinc-400">Class of 2026</p>
+                        <p class="text-sm text-zinc-400">Class of 2027</p>
                         <div class="mt-4 flex items-center gap-2 text-orange-500 text-xs font-mono">
                             <i class="fas fa-graduation-cap"></i> Pursuing Excellence
                         </div>
                     </div>
 
                     <div
-                        class="bg-[#111111] border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden group">
+                        class="bg-[#111111] border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden group hover:border-red-500/30 transition-all duration-500">
                         <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-orange-500/10 blur-2xl rounded-full"></div>
                         <p class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-4">Currently Learning
                         </p>
                         <div class="flex items-center gap-4">
                             <div
-                                class="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center animate-bounce">
+                                class="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center animate-pulse">
                                 <i class="fab fa-react text-orange-500"></i>
                             </div>
                             <div>
-                                <h4 class="text-white font-bold">Advanced React</h4>
+                                <h4 class="text-white font-bold group-hover:text-red-500 transition-colors">Advanced
+                                    React</h4>
                                 <p class="text-[10px] text-zinc-500">For Dynamic Dashboards</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-[#111111] border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden group hover:border-red-500/30 transition-all duration-500">
+                        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-red-600/10 blur-2xl rounded-full"></div>
+
+                        <p class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-4">Backend Mastery
+                        </p>
+
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 bg-red-600/20 rounded-xl flex items-center justify-center animate-pulse">
+                                <i class="fab fa-laravel text-red-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold group-hover:text-red-500 transition-colors">Laravel
+                                    Framework</h4>
+                                <p class="text-[10px] text-zinc-500">Scalable PHP Architecture</p>
                             </div>
                         </div>
                     </div>
@@ -586,6 +614,120 @@ body.loaded-active main {
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 bg-[#0a0a0a] border-y border-white/5 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-10">
+            <p class="text-white text-[12px] uppercase font-black tracking-[0.5em] text-center mb-10">
+                Technical Arsenal
+            </p>
+        </div>
+
+        <div class="relative flex overflow-hidden group">
+            <div class="flex animate-scroll whitespace-nowrap gap-16 md:gap-32 items-center py-4">
+                <div
+                    class="skill-item grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer flex items-center gap-3">
+                    <img src="mongodb.svg" alt="MongoDB"
+                        style="width: 36px !important; height: 36px !important; display: block !important;"
+                        class="object-contain">
+                    <span class="text-white font-bold tracking-tighter uppercase italic">MongoDB</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-react text-4xl text-[#61DAFB]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">React</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-laravel text-4xl text-[#FF2D20]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Laravel</span>
+                </div>
+                <div
+                    class="skill-item grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer flex items-center gap-3">
+                    <img src="mysql.svg" alt="MySQL"
+                        style="width: 36px !important; height: 36px !important; display: block !important;"
+                        class="object-contain">
+                    <span class="text-white font-bold tracking-tighter uppercase italic">MySQL</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-git-alt text-4xl text-[#F05032]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Git</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fas fa-rocket text-4xl text-[#FF6C37]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Postman</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-js text-4xl text-[#F7DF1E]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">JavaScript</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-node-js text-4xl text-[#339933]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Node.js</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-java text-4xl text-[#007396]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Java</span>
+                </div>
+            </div>
+
+            <div class="flex animate-scroll whitespace-nowrap gap-16 md:gap-32 items-center py-4" aria-hidden="true">
+                <div
+                    class="skill-item grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer flex items-center gap-3">
+                    <img src="mongodb.svg" alt="MongoDB"
+                        style="width: 36px !important; height: 36px !important; display: block !important;"
+                        class="object-contain">
+                    <span class="text-white font-bold tracking-tighter uppercase italic">MongoDB</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-react text-4xl text-[#61DAFB]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">React</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-laravel text-4xl text-[#FF2D20]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Laravel</span>
+                </div>
+                <div
+                    class="skill-item grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer flex items-center gap-3">
+                    <img src="mysql.svg" alt="MySQL"
+                        style="width: 36px !important; height: 36px !important; display: block !important;"
+                        class="object-contain">
+                    <span class="text-white font-bold tracking-tighter uppercase italic">MySQL</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-git-alt text-4xl text-[#F05032]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Git</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fas fa-rocket text-4xl text-[#FF6C37]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Postman</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-js text-4xl text-[#F7DF1E]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">JavaScript</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-node-js text-4xl text-[#339933]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Node.js</span>
+                </div>
+                <div
+                    class="skill-item flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                    <i class="fab fa-java text-4xl text-[#007396]"></i>
+                    <span class="text-white font-bold tracking-tighter uppercase italic">Java</span>
+                </div>
             </div>
         </div>
     </section>
