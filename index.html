@@ -291,18 +291,25 @@
             </div>
         </div>
     </div>
-    <nav class="flex items-center justify-between px-12 py-8 max-w-7xl mx-auto">
-        <div class="text-2xl font-bold accent-orange">SA</div>
+    <header class="fixed top-0 left-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900/50">
+    <nav class="flex items-center justify-between px-12 py-6 max-w-7xl mx-auto">
+        <div class="text-2xl font-bold text-orange-500">SA</div>
+        
         <div class="hidden md:flex space-x-8 text-gray-400">
-            <a href="#" class="text-orange-500">Home</a>
-            <a href="#services" class="hover:text-white">Services</a>
-            <a href="#about" class="hover:text-white">About me</a>
-            <a href="#certificates" class="hover:text-white">Certificate</a>
-            <a href="#contact" class="hover:text-white">Contact me</a>
+            <a href="#" class="text-orange-500 font-medium">Home</a>
+            <a href="#services" class="hover:text-white transition-colors">Services</a>
+            <a href="#about" class="hover:text-white transition-colors">About me</a>
+            <a href="#certificates" class="hover:text-white transition-colors">Certificate</a>
+            <a href="#contact" class="hover:text-white transition-colors">Contact me</a>
         </div>
-        <button class="bg-orange text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition">Hire
-            Me</button>
+        
+        <button class="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition shadow-lg shadow-orange-500/20">
+            Hire Me
+        </button>
     </nav>
+</header>
+
+<div class="h-24"></div>
 
     <section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-12 relative overflow-hidden">
 
